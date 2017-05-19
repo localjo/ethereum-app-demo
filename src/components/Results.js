@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 
 export default class Results extends Component {
+  refresh() {
+    this.props.refresh();
+  }
   render() {
     var {results} = this.props;
     var totalVotes = results.reduce((acc, candidate)=>{return acc + candidate.count}, 0);
@@ -29,6 +32,10 @@ export default class Results extends Component {
           bottom: 0,
           left: 0
         }
+      },
+      refresh: {
+        color: '',
+        cursor: 'pointer'
       }
     };
     results.forEach((candidate)=>{
@@ -41,7 +48,7 @@ export default class Results extends Component {
     return (
       <ul style={styles.list}>
         {items}
-        <p style={{color: '#8899A6'}}>{totalVotes} votes</p>
+        <p style={{color: '#8899A6'}}>{totalVotes} votes • <a style={styles.refresh} onClick={()=>{this.refresh()}}>Refresh</a></p>
       </ul>
     );
   }

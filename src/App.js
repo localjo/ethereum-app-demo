@@ -39,6 +39,21 @@ class App extends Component {
     });
   }
 
+  refresh() {
+    var comp = this;
+    Election.deployed().then(function(instance) {
+        async.map(candidates, function(name, callback) {
+          return instance.getVoteCount.call(name).then(function(count) {
+            return callback(null, {name: name, count: count.toNumber()});
+          });
+        }, function(err, res) {
+          if (res) comp.setState({results: res, names: res.map((candidate)=>{
+            return candidate.name;
+          })});
+        });
+    });
+  }
+
   render() {
     var styles = {
       wrapper: {
@@ -66,7 +81,7 @@ class App extends Component {
         <Account />
         <p style={styles.question}>Who is your favorite legend?</p>
         { this.state.results.length
-          ? <Results results={this.state.results}/>
+          ? <Results results={this.state.results} refresh={()=>{this.refresh()}}/>
           : <Poll candidates={candidates} vote={(candidate) => this.castVote(candidate)}/>
         }
       </div>
