@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 
-export default class Ballot extends Component {
+import Choice from './Choice';
+
+export default class Poll extends Component {
   constructor(props) {
     super(props);
     this.state = {input: ''};
@@ -19,10 +21,13 @@ export default class Ballot extends Component {
   }
 
   render() {
+    var candidates = this.props.candidates;
+    var choices = candidates.map((name)=>{
+      return (<Choice key={name} name={name} onChange={evt => this.updateInput(evt)} />);
+    })
     return (
       <div>
-        <h2>Ballot</h2>
-        <input value={this.state.input} onChange={evt => this.updateInput(evt)} placeholder='Type candidate name here.'/>
+        {choices}
         <button onClick={() => this.castVote(this.state.input)}>Vote</button>
       </div>
     );

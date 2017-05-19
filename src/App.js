@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import avatar from './avatar.png';
 
 import { default as async } from 'async';
 import { default as Web3} from 'web3';
@@ -8,7 +9,7 @@ import electionInterface from '../build/contracts/Election.json';
 import { default as candidateList } from '../candidates.json';
 let candidates = candidateList.names;
 
-import Ballot from './components/Ballot';
+import Poll from './components/Poll';
 import Results from './components/Results';
 
 var Election = contract(electionInterface);
@@ -19,39 +20,35 @@ Election.setProvider(web3.currentProvider);
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {results: [], names: []};
-  }
-
-  componentWillMount() {
-    var comp = this;
-    Election.deployed().then(function(instance) {
-      async.map(candidates, function(name, callback) {
-        return instance.getVoteCount.call(name).then(function(count) {
-          return callback(null, {name: name, count: count.toNumber()});
-        });
-      }, function(err, res) {
-        if (res) comp.setState({results: res, names: res.map((candidate)=>{
-          return candidate.name;
-        })});
-      });
-    });
+    this.state = {names: [], results: []};
   }
 
   castVote(candidate) {
-    console.log(`Root component detected intent to vote for ${candidate}`);
+    var comp = this;
     Election.deployed().then(function(instance) {
       instance.castVote(candidate, {gas: 140000, from: web3.eth.accounts[0]}).then(function() {
-        console.log('Update now');
+        async.map(candidates, function(name, callback) {
+          return instance.getVoteCount.call(name).then(function(count) {
+            return callback(null, {name: name, count: count.toNumber()});
+          });
+        }, function(err, res) {
+          if (res) comp.setState({results: res, names: res.map((candidate)=>{
+            return candidate.name;
+          })});
+        });
       });
     });
   }
 
   render() {
     return (
-      <div>
+      <div className='app'>
+        <img className='avatar' src={avatar} alt='Avatar' />
         <h1>Election Demo</h1>
-        <Ballot candidates={this.state.names} vote={this.castVote}/>
-        <Results results={this.state.results}/>
+        { this.state.results.length
+          ? <Results results={this.state.results}/>
+          : <Poll candidates={candidates} vote={(candidate) => this.castVote(candidate)}/>
+        }
       </div>
     );
   }

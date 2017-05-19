@@ -7,12 +7,9 @@ export default class Results extends Component {
       items.push(<li key={candidate.name}>{candidate.name}: {candidate.count}</li>);
     });
     return (
-      <div>
-        <h2>Results</h2>
-        <ul className="App">
-          {items}
-        </ul>
-      </div>
+      <ul>
+        {items}
+      </ul>
     );
   }
 }

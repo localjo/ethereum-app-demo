@@ -3,8 +3,20 @@ html {
   color: #eee;
 }
 
-.container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 20px;
+.app {
+  background: #fff;
+  color: #14171a;
+  margin: 130px auto;
+  padding: 30px 40px;
+  border-radius: 5px;
+  font-size: 14px;
+  line-height: 18px;
+  width: 640px;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 5px;
+  float: left;
 }
