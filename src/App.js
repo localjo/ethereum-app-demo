@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 
 import { default as async } from 'async';
 import { default as Web3} from 'web3';
@@ -8,7 +7,8 @@ import electionInterface from '../build/contracts/Election.json';
 import { default as candidateList } from '../candidates.json';
 let candidates = candidateList.names;
 
-import Ballot from './components/Ballot';
+import Account from './components/Account';
+import Poll from './components/Poll';
 import Results from './components/Results';
 
 var Election = contract(electionInterface);
@@ -19,39 +19,56 @@ Election.setProvider(web3.currentProvider);
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {results: [], names: []};
-  }
-
-  componentWillMount() {
-    var comp = this;
-    Election.deployed().then(function(instance) {
-      async.map(candidates, function(name, callback) {
-        return instance.getVoteCount.call(name).then(function(count) {
-          return callback(null, {name: name, count: count.toNumber()});
-        });
-      }, function(err, res) {
-        if (res) comp.setState({results: res, names: res.map((candidate)=>{
-          return candidate.name;
-        })});
-      });
-    });
+    this.state = {names: [], results: []};
   }
 
   castVote(candidate) {
-    console.log(`Root component detected intent to vote for ${candidate}`);
+    var comp = this;
     Election.deployed().then(function(instance) {
       instance.castVote(candidate, {gas: 140000, from: web3.eth.accounts[0]}).then(function() {
-        console.log('Update now');
+        async.map(candidates, function(name, callback) {
+          return instance.getVoteCount.call(name).then(function(count) {
+            return callback(null, {name: name, count: count.toNumber()});
+          });
+        }, function(err, res) {
+          if (res) comp.setState({results: res, names: res.map((candidate)=>{
+            return candidate.name;
+          })});
+        });
       });
     });
   }
 
   render() {
+    var styles = {
+      wrapper: {
+        background: '#fff',
+        color: '#14171a',
+        margin: '80px auto',
+        padding: '30px 40px',
+        borderRadius: 5,
+        fontSize: 14,
+        lineHeight: '18px',
+        width: 560,
+        boxShadow: '5px 5px 5px rgba(0,0,0,0.8)'
+      },
+      question: {
+        clear: 'both',
+        fontSize: 27,
+        lineHeight: '32px',
+        fontWeight: 300,
+        letterSpacing: '.01em',
+        margin: '10px 0'
+      }
+    };
     return (
-      <div>
-        <h1>Election Demo</h1>
-        <Ballot candidates={this.state.names} vote={this.castVote}/>
-        <Results results={this.state.results}/>
+      <div style={styles.wrapper}>
+        <Account />
+        <p style={styles.question}>Who is your favorite legend?</p>
+        { this.state.results.length
+          ? <Results results={this.state.results}/>
+          : <Poll candidates={candidates} vote={(candidate) => this.castVote(candidate)}/>
+        }
       </div>
     );
   }

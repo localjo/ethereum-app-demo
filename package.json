@@ -1,6 +1,7 @@
 {
-  "name": "election-react",
+  "name": "ethereum-app-demo",
   "version": "0.1.0",
+  "description": "A simple app to demo what's possible with Ethereum",
   "private": true,
   "dependencies": {
     "async": "^2.4.0",
