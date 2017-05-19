@@ -1,0 +1,10 @@
+html {
+  background: #111;
+  color: #eee;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+}

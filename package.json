@@ -1,0 +1,25 @@
+{
+  "name": "election-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "async": "^2.4.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "web3": "^0.19.0"
+  },
+  "devDependencies": {
+    "babel-register": "^6.24.1",
+    "ethereumjs-testrpc": "^3.0.5",
+    "react-scripts": "0.9.5",
+    "truffle-contract": "^2.0.0"
+  },
+  "scripts": {
+    "network": "testrpc -p 8550",
+    "migrate": "truffle migrate --network development",
+    "start": "react-scripts start",
+    "build": "echo 'Before this app can be built you must resolve build directory conflicts with Truffle'",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
