@@ -26,20 +26,12 @@ class App extends Component {
     var comp = this;
     Election.deployed().then(function(instance) {
       instance.castVote(candidate, {gas: 140000, from: web3.eth.accounts[0]}).then(function() {
-        async.map(candidates, function(name, callback) {
-          return instance.getVoteCount.call(name).then(function(count) {
-            return callback(null, {name: name, count: count.toNumber()});
-          });
-        }, function(err, res) {
-          if (res) comp.setState({results: res, names: res.map((candidate)=>{
-            return candidate.name;
-          })});
-        });
+        comp.refreshCounts();
       });
     });
   }
 
-  refresh() {
+  refreshCounts() {
     var comp = this;
     Election.deployed().then(function(instance) {
         async.map(candidates, function(name, callback) {
@@ -81,7 +73,7 @@ class App extends Component {
         <Account />
         <p style={styles.question}>Who is your favorite legend?</p>
         { this.state.results.length
-          ? <Results results={this.state.results} refresh={()=>{this.refresh()}}/>
+          ? <Results results={this.state.results} refresh={()=>{this.refreshCounts()}}/>
           : <Poll candidates={candidates} vote={(candidate) => this.castVote(candidate)}/>
         }
       </div>

@@ -33,8 +33,9 @@ export default class Results extends Component {
           left: 0
         }
       },
-      refresh: {
-        color: '',
+      links: {
+        color: '#8899A6',
+        textDecoration: 'none',
         cursor: 'pointer'
       }
     };
@@ -48,7 +49,9 @@ export default class Results extends Component {
     return (
       <ul style={styles.list}>
         {items}
-        <p style={{color: '#8899A6'}}>{totalVotes} votes • <a style={styles.refresh} onClick={()=>{this.refresh()}}>Refresh</a></p>
+        <p style={{color: '#8899A6'}}>
+          {totalVotes} votes • <a style={styles.links} onClick={()=>{this.refresh()}}>Refresh Results</a> • <a style={styles.links} href=''>Vote Again</a>
+        </p>
       </ul>
     );
   }
