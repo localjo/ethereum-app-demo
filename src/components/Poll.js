@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import Choice from './Choice';
+import Button from './Button';
 
 export default class Poll extends Component {
   constructor(props) {
@@ -24,11 +25,17 @@ export default class Poll extends Component {
     var candidates = this.props.candidates;
     var choices = candidates.map((name)=>{
       return (<Choice key={name} name={name} onChange={evt => this.updateInput(evt)} />);
-    })
+    });
+    var styles = {
+      list: {
+        margin: 0,
+        padding: 0
+      }
+    };
     return (
       <div>
-        {choices}
-        <button onClick={() => this.castVote(this.state.input)}>Vote</button>
+        <ul style={styles.list}>{choices}</ul>
+        <Button text="Vote" action={() => this.castVote(this.state.input)}/>
       </div>
     );
   }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import avatar from './avatar.png';
 
 import { default as async } from 'async';
 import { default as Web3} from 'web3';
@@ -8,6 +7,7 @@ import electionInterface from '../build/contracts/Election.json';
 import { default as candidateList } from '../candidates.json';
 let candidates = candidateList.names;
 
+import Account from './components/Account';
 import Poll from './components/Poll';
 import Results from './components/Results';
 
@@ -44,27 +44,27 @@ class App extends Component {
       wrapper: {
         background: '#fff',
         color: '#14171a',
-        margin: '130px auto',
+        margin: '80px auto',
         padding: '30px 40px',
         borderRadius: 5,
         fontSize: 14,
         lineHeight: '18px',
-        width: 640
+        width: 560,
+        boxShadow: '5px 5px 5px rgba(0,0,0,0.8)'
       },
-      avatar: {
-        width: 48,
-        height: 48,
-        borderRadius: 5,
-        float: 'left'
+      question: {
+        clear: 'both',
+        fontSize: 27,
+        lineHeight: '32px',
+        fontWeight: 300,
+        letterSpacing: '.01em',
+        margin: '10px 0'
       }
     };
     return (
       <div style={styles.wrapper}>
-        <a href="http://twitter.com/localjo">
-          <img style={styles.avatar} src={avatar} alt='Avatar' />
-          <h1>Computer Science FTW</h1>
-        </a>
-        <p>Who has contributed the most to modern Computer Science?</p>
+        <Account />
+        <p style={styles.question}>Who is your favorite legend?</p>
         { this.state.results.length
           ? <Results results={this.state.results}/>
           : <Poll candidates={candidates} vote={(candidate) => this.castVote(candidate)}/>
