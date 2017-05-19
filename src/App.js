@@ -47,16 +47,11 @@ class App extends Component {
   }
 
   render() {
-    var items = [];
-    this.state.results.forEach((candidate)=>{
-      items.push(<li key={candidate.name}>{candidate.name}: {candidate.count}</li>);
-    });
     return (
       <div>
         <h1>Election Demo</h1>
         <Ballot candidates={this.state.names} vote={this.castVote}/>
-        <Results />
-        <ul className="App">{items}</ul>
+        <Results results={this.state.results}/>
       </div>
     );
   }
