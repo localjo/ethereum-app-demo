@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import avatar from './avatar.png';
 
 import { default as async } from 'async';
@@ -41,10 +40,31 @@ class App extends Component {
   }
 
   render() {
+    var styles = {
+      wrapper: {
+        background: '#fff',
+        color: '#14171a',
+        margin: '130px auto',
+        padding: '30px 40px',
+        borderRadius: 5,
+        fontSize: 14,
+        lineHeight: '18px',
+        width: 640
+      },
+      avatar: {
+        width: 48,
+        height: 48,
+        borderRadius: 5,
+        float: 'left'
+      }
+    };
     return (
-      <div className='app'>
-        <img className='avatar' src={avatar} alt='Avatar' />
-        <h1>Election Demo</h1>
+      <div style={styles.wrapper}>
+        <a href="http://twitter.com/localjo">
+          <img style={styles.avatar} src={avatar} alt='Avatar' />
+          <h1>Computer Science FTW</h1>
+        </a>
+        <p>Who has contributed the most to modern Computer Science?</p>
         { this.state.results.length
           ? <Results results={this.state.results}/>
           : <Poll candidates={candidates} vote={(candidate) => this.castVote(candidate)}/>
