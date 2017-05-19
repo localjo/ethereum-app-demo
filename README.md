@@ -19,7 +19,7 @@ Follow these steps to start the app;
 3) Start the app: `npm start`
 
 ## Configuration
-To configure the poll options, edit `./candidates.json`. To edit the poll question, just edit the text in `./src/App.js` on line 67.
+To configure the poll options, edit `./candidates.json`. To edit the poll question, just edit the paragraph in the render method of `./src/App.js`.
 
 ## Usage
 Once the app is running, you can vote just like a Twitter poll. You can open multiple windows and vote, and use the "Refresh" link at the bottom of the results list to refresh the results that are coming in from other windows. To vote again, reload the page to reset the poll UI. To clear the poll results, stop and restart the local Ethereum network.
