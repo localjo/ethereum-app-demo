@@ -22,6 +22,14 @@ class App extends Component {
     this.state = {names: [], results: []};
   }
 
+  componentWillMount() {
+    Election.deployed().then(function(instance) {
+      instance.candidateList.call('1', {gas: 140000, from: web3.eth.accounts[0]}).then(function(res) {
+        console.log('res: ', res);
+      });
+    });
+  }
+
   castVote(candidate) {
     var comp = this;
     Election.deployed().then(function(instance) {
