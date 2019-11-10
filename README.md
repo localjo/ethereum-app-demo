@@ -6,6 +6,10 @@ This app mimics a simple Twitter poll with the votes being tracked on the Ethere
 
 ![Screenshot](./screenshot.png)
 
+## Prerequisites
+
+Before you can install and run this app you must install Node/npm and install Truffle with `npm install -g truffle`. This demo has been tested with Node 12.10.0, npm 6.10.3 and Truffle 5.0.44.
+
 ## Installation
 
 Clone this repository, then run `npm install`.
@@ -19,10 +23,10 @@ Follow these steps to start the app;
 3) Start the app: `npm start`
 
 ## Configuration
-To configure the poll options, edit `./candidates.json`. To edit the poll question, just edit the paragraph in the render method of `./src/App.js`.
+To configure the poll options, edit `./candidates.json`. To edit the poll question, edit the paragraph in the render method of `./src/App.js`.
 
 ## Usage
-Once the app is running, you can vote just like a Twitter poll. You can open multiple windows and vote, and use the "Refresh" link at the bottom of the results list to refresh the results that are coming in from other windows. To vote again, reload the page to reset the poll UI. To clear the poll results, stop and restart the local Ethereum network.
+Once the app is running, you can vote in a similar fashion to a poll on Twitter. You can open multiple windows and vote, and use the "Refresh" link at the bottom of the results list to refresh the results that are coming in from other windows. To vote again, reload the page to reset the poll UI. To clear the poll results, stop and restart the local Ethereum network.
 
 ## Notes
 
